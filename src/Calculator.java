@@ -12,7 +12,7 @@ public class Calculator implements ActionListener {
     JButton decButton, equButton, delButton, clrButton, negButton;
     JPanel panel;
 
-    Font myFont = new Font("Ink Free",Font.BOLD,30);
+    Font myFont = new Font("Arial",Font.BOLD,24);
 
     double num1=0, num2=0, result=0;
     char operator;
@@ -107,7 +107,7 @@ public class Calculator implements ActionListener {
     }
 
     //Trying to get the last char of a string to match with "."
-    public static String getLast(String value, int count) {
+    /*public static String getLast(String value, int count) {
         if (value == null || value.trim().length() == 0 || count<1){
             return "";
         }
@@ -116,9 +116,22 @@ public class Calculator implements ActionListener {
         }else{
             return value;
         }
+    }*/
+
+    public void checkDot(String string) {
+        for(int i=0; i<string.length();i++){
+            if(string.contains(".")){
+                haveDot = true;
+            }else{
+                haveDot = false;
+            }
+        }
     }
 
     public void actionPerformed(ActionEvent e){
+
+
+        //String lastChar = getLast(textfield.getText(), textfield.getText().length()-(textfield.getText().length()-1));
 
         for(int i=0; i<10; i++){
             if(e.getSource() == numberButtons[i]){
@@ -175,24 +188,20 @@ public class Calculator implements ActionListener {
         }
         if(e.getSource() == clrButton){
             textfield.setText("");
+            haveDot = false;
         }
         if(e.getSource() == delButton){
 
-            //it doesn't work ;(
-            //I tried to check the last deleted char to control the number of dots with bool\
-            String lastChar = getLast(textfield.getText(), 1);
-            if(lastChar == "."){
-                haveDot = false;
-            }
-            String string = textfield.getText();
-            //System.out.println(getLast(string,1));
+            //String lastChar = getLast(textfield.getText(), textfield.getText().length()-(textfield.getText().length()-2));
+            //System.out.println(getLast(string,string.length()-(string.length()-1)));
             //System.out.println(haveDot);
-            
+            //System.out.println(lastChar);
+            String string = textfield.getText();
             textfield.setText("");
             for(int i = 0; i<string.length()-1;i++){
                 textfield.setText(textfield.getText()+string.charAt(i));
             }
-            
+            checkDot(textfield.getText());    
         }
         if(e.getSource() == negButton){
             double temp = Double.parseDouble(textfield.getText());
